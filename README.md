@@ -1,70 +1,26 @@
-# `@ubiquity/ts-template`
+# `ubiquity/task-board`
 
-This template repository includes support for the following:
+Agile-style project board for high priority tasks from all Ubiquity related organizations. Uses [github projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/quickstart-for-projects) API under the hood.
 
-- TypeScript
-- Environment Variables
-- Conventional Commits
-- Automatic deployment to Cloudflare Pages
+## How it works
+1. On cron schedule the script fetches all available Ubiquity tasks from [devpool-directory#STORAGE](https://github.com/ubiquity/devpool-directory/blob/ec2612388d1cae27382372aad98a4f1d51ce12f4/devpool-issues.json)
+2. The script filters only high priority tasks, i.e. with labels: `Priority: 3 (High)`, `Priority: 4 (Urgent)`, `Priority: 5 (Emergency)`
+3. The script adds high priority tasks to the project board
+4. The script removes irrelevant github issues from the project board (i.e. the ones that do not match the priority anymore)
 
-## Testing
-
-### Cypress
-
-To test with Cypress Studio UI, run
-
-```shell
-yarn cy:open
+## How to setup
+Setup the following `env` variables for the repository:
 ```
+# project board owner username
+PROJECT_GITHUB_OWNER="ubiquity"
 
-Otherwise, to simply run the tests through the console, run
+# project board number (may be fetched from github project board URL)
+PROJECT_GITHUB_NUMBER="1"
 
-```shell
-yarn cy:run
-```
+# personal github PAT
+GITHUB_PAT="MY_SECRET"
 
-### Jest
+# required labels that must be present on the task for it to be added to the project board
+REQUIRED_LABELS="Priority: 3 (High),Priority: 4 (Urgent),Priority: 5 (Emergency)"
 
-To start Jest tests, run
-
-```shell
-yarn test
-```
-
-## Sync any repository to latest `ts-template`
-
-A bash function that can do this for you:
-
-```bash
-sync-branch-to-template() {
-  local branch_name
-  branch_name=$(git rev-parse --abbrev-ref HEAD)
-  local original_remote
-  original_remote=$(git remote show | head -n 1)
-
-  # Add the template remote
-  git remote add template https://github.com/ubiquity/ts-template
-
-  # Fetch from the template remote
-  git fetch template development
-
-  if [ "$branch_name" != "HEAD" ]; then
-    # Create a new branch and switch to it
-    git checkout -b "chore/merge-${branch_name}-template"
-
-    # Merge the changes from the template remote
-    git merge template/development --allow-unrelated-histories
-
-    # Switch back to the original branch
-    git checkout "$branch_name"
-
-    # Push the changes to the original remote
-    git push "$original_remote" HEAD:"$branch_name"
-  else
-    echo "You are in a detached HEAD state. Please checkout a branch first."
-  fi
-
-  # Remove the template remote
-  # git remote remove template
-}
 ```

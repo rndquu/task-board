@@ -1,0 +1,30 @@
+name: Sync Project Board Issues
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *" # once a day at 06:00
+
+jobs:
+  sync-project-board-issues:
+    name: Sync Project Board Issues
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.10.0"
+
+      - name: Yarn Install
+        run: yarn install --mode=skip-build
+
+      - name: Sync Project Board Issues
+        env:
+          PROJECT_GITHUB_OWNER: "ubiquity"
+          PROJECT_GITHUB_NUMBER: "27"
+          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+          REQUIRED_LABELS: "Priority: 3 (High),Priority: 4 (Urgent),Priority: 5 (Emergency)"
+        run: npx tsx index.ts
