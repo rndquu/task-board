@@ -9,18 +9,8 @@
     "node": ">=20.10.0"
   },
   "scripts": {
-    "start": "tsx build/esbuild-server.ts",
-    "build": "tsx build/esbuild-build.ts",
-    "format": "run-s format:lint format:prettier format:cspell",
-    "format:lint": "eslint --fix .",
-    "format:prettier": "prettier --write .",
-    "format:cspell": "cspell **/*",
-    "knip": "knip --config .github/knip.ts",
-    "knip-ci": "knip --no-exit-code --reporter json --config .github/knip.ts",
     "prepare": "husky install",
-    "test": "jest --setupFiles dotenv/config --coverage",
-    "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "sync": "npx tsx index.ts"
   },
   "keywords": [
     "typescript",
