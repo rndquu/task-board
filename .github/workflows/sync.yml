@@ -25,6 +25,6 @@ jobs:
         env:
           PROJECT_GITHUB_OWNER: "ubiquity"
           PROJECT_GITHUB_NUMBER: "27"
-          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+          ACCESS_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN_GITHUB }}
           REQUIRED_LABELS: "Priority: 3 (High),Priority: 4 (Urgent),Priority: 5 (Emergency)"
         run: npx tsx index.ts

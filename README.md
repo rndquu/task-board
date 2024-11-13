@@ -18,7 +18,7 @@ PROJECT_GITHUB_OWNER="ubiquity"
 PROJECT_GITHUB_NUMBER="1"
 
 # personal github PAT
-GITHUB_PAT="MY_SECRET"
+ACCESS_TOKEN_GITHUB="MY_SECRET"
 
 # required labels that must be present on the task for it to be added to the project board
 REQUIRED_LABELS="Priority: 3 (High),Priority: 4 (Urgent),Priority: 5 (Emergency)"

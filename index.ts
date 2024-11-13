@@ -3,7 +3,7 @@ import GithubProject from 'github-project';
 
 const PROJECT_GITHUB_OWNER = process.env.PROJECT_GITHUB_OWNER;
 const PROJECT_GITHUB_NUMBER = process.env.PROJECT_GITHUB_NUMBER;
-const GITHUB_PAT = process.env.GITHUB_PAT;
+const ACCESS_TOKEN_GITHUB = process.env.ACCESS_TOKEN_GITHUB;
 const REQUIRED_LABELS = process.env.REQUIRED_LABELS?.split(',');
 const DEVPOOL_ISSUES_JSON_URL = 'https://raw.githubusercontent.com/ubiquity/devpool-directory/refs/heads/__STORAGE__/devpool-issues.json';
 
@@ -20,14 +20,14 @@ async function main() {
     // env validation
     if (!PROJECT_GITHUB_OWNER) throw Error('env: empty PROJECT_GITHUB_OWNER');
     if (!PROJECT_GITHUB_NUMBER) throw Error('env: empty PROJECT_GITHUB_NUMBER');
-    if (!GITHUB_PAT) throw Error('env: empty GITHUB_PAT');
+    if (!ACCESS_TOKEN_GITHUB) throw Error('env: empty ACCESS_TOKEN_GITHUB');
     if (!REQUIRED_LABELS) throw Error('env: empty REQUIRED_LABELS');
 
     // fetch github project board
     const project = await GithubProject.getInstance({
       owner: PROJECT_GITHUB_OWNER,
       number: +PROJECT_GITHUB_NUMBER,
-      token: GITHUB_PAT,
+      token: ACCESS_TOKEN_GITHUB,
     });
 
     // fetch all devpool issues
